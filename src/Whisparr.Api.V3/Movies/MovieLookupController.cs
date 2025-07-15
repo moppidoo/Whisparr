@@ -9,6 +9,7 @@ using NzbDrone.Core.Movies;
 using NzbDrone.Core.Organizer;
 using Whisparr.Http;
 using Whisparr.Http.REST;
+using NzbDrone.Core.MetadataSource.Custom;
 
 namespace Whisparr.Api.V3.Movies
 {
@@ -59,6 +60,22 @@ namespace Whisparr.Api.V3.Movies
             var availDelay = _configService.AvailabilityDelay;
             return result.ToResource(availDelay);
         }
+
+        [HttpGet("scene/lookup")]
+        public IActionResult LookupScene([FromQuery] string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+                return BadRequest("Term is required");
+
+            var provider = new MetadataProviderService();
+            var result = provider.FetchScene(term); // Make sure this method exists
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
 
         [HttpGet]
         public object Search([FromQuery] string term)
