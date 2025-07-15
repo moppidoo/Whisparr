@@ -16,6 +16,11 @@
     "orderingRules": {
       "systemUsingDirectivesFirst": true,
       "usingDirectivesPlacement": "outsideNamespace"
+    },
+    "rules": {
+      "orderingRules": {
+        "usingDirectivesPlacement": "outsideNamespace"
+      }
     }
   }
 }
